@@ -13,7 +13,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionListener; 
- import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent;
 
 public class Menu extends JFrame implements ActionListener {
     
@@ -70,7 +70,7 @@ public class Menu extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent event) {
     }
