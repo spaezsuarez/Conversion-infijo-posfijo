@@ -25,9 +25,7 @@ public class logica {
     }
 
     public String calcularSufijo(String prefijo) {
-//a+(b*c-(d/e^f)*g)*h
         String postfijo = "";
-
         for (int i = 0; i < prefijo.length(); i++) {
             if (simbolos.contains(prefijo.substring(i, i + 1))) {
                 if (pila.isEmpty()) {
@@ -35,7 +33,7 @@ public class logica {
                 } else if (prefijo.substring(i, i + 1).equals(")")) {
                     while (!pila.isEmpty()) {
                         String temp = pila.pop();
-                        if (!temp.equals("(")) {
+                        if (!temp.equals("(") && !temp.equals(")")) {
                             postfijo += temp;
                         }
                     }
@@ -43,7 +41,6 @@ public class logica {
                     pila.push(prefijo.substring(i, i + 1));
                 } else {
                     int operacion = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
-                    System.out.println(pila.get(pila.size() - 1) + "        " + prefijo.substring(i, i + 1));
                     if (operacion == 1) {
                         String pop = pila.pop();
                         postfijo += (pop);
@@ -51,7 +48,6 @@ public class logica {
                         boolean salir = false;
                         while (!salir && !pila.isEmpty()) {
                             int operacionBucle = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
-                            System.out.println(pila.get(pila.size() - 1) + "        " + prefijo.substring(i, i + 1));
                             if (operacionBucle == 1) {
                                 String popBucle = pila.pop();
                                 postfijo += (popBucle);
@@ -61,7 +57,7 @@ public class logica {
                                 } else {
                                     while (!pila.isEmpty()) {
                                         String temp = pila.pop();
-                                        if (!temp.equals("(")) {
+                                        if (!temp.equals("(") && !temp.equals(")")) {
                                             postfijo += temp;
                                         }
                                     }
@@ -72,7 +68,6 @@ public class logica {
 
                         if (pila.isEmpty()) {
                             pila.push(prefijo.substring(i, i + 1));
-                            System.out.println("XDDDDD");
                         }
 
                     } else {
@@ -81,14 +76,13 @@ public class logica {
                         } else {
                             while (!pila.isEmpty()) {
                                 String temp = pila.pop();
-                                if (!temp.equals("(")) {
+                                if (!temp.equals("(") && !temp.equals(")")) {
                                     postfijo += temp;
                                 }
                             }
                         }
                     }
                 }
-
             } else {
                 postfijo += (String.valueOf(prefijo.substring(i, i + 1)));
             }
@@ -96,7 +90,10 @@ public class logica {
         }
 
         while (!pila.isEmpty()) {
-            postfijo += pila.pop();
+            String popFinal = pila.pop();
+            if (!popFinal.equals(")") && !popFinal.equals("(")) {
+                postfijo += popFinal;
+            }
         }
 
         return postfijo;
