@@ -20,15 +20,16 @@ public class Menu extends JFrame {
 
     private final int ancho, alto;
     private JTextField input;
-    private JLabel title;
+    private JLabel title,result;
     private JButton btn;
 
     public Menu() {
         ancho = 400;
-        alto = 500;
+        alto = 400;
         input = new JTextField();
         title = new JLabel("Conversión de infijo a posfijo ");
         btn = new JButton("Convertir");
+        result = new JLabel();
     }
 
     public void initElements() {
@@ -49,9 +50,16 @@ public class Menu extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 20));
         title.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(title);
-
+        
+        result.setSize(new Dimension(ancho - 10, 150));
+        result.setLocation(5, 150);
+        result.setHorizontalAlignment(SwingConstants.CENTER);
+        result.setFont(new Font("Arial", Font.BOLD, 25));
+        result.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        add(result);
+        
         btn.setSize(new Dimension(200, 30));
-        btn.setLocation((this.getWidth() - btn.getWidth()) / 2, 420);
+        btn.setLocation((this.getWidth() - btn.getWidth()) / 2, 320);
         btn.setFont(new Font("Arial", Font.PLAIN, 15));
         btn.setFocusable(false);
         btn.setHorizontalAlignment(SwingConstants.CENTER);
@@ -75,8 +83,8 @@ public class Menu extends JFrame {
         btn.addActionListener((ae) -> {
             logica logic = new logica();
             String respuesta = logic.calcularSufijo(input.getText());
-            JOptionPane.showMessageDialog(null, respuesta, "Solución", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println(respuesta);
+            result.setText(respuesta);
+            repaint();
         });
     }
 
