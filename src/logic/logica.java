@@ -25,15 +25,25 @@ public class logica {
     }
 
     public String calcularSufijo(String prefijo) {
-
+//a+(b*c-(d/e^f)*g)*h
         String postfijo = "";
 
         for (int i = 0; i < prefijo.length(); i++) {
             if (simbolos.contains(prefijo.substring(i, i + 1))) {
                 if (pila.isEmpty()) {
                     pila.push(prefijo.substring(i, i + 1));
+                } else if (prefijo.substring(i, i + 1).equals(")")) {
+                    while (!pila.isEmpty()) {
+                        String temp = pila.pop();
+                        if (!temp.equals("(")) {
+                            postfijo += temp;
+                        }
+                    }
+                } else if (prefijo.substring(i, i + 1).equals("(")) {
+                    pila.push(prefijo.substring(i, i + 1));
                 } else {
                     int operacion = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
+                    System.out.println(pila.get(pila.size() - 1) + "        " + prefijo.substring(i, i + 1));
                     if (operacion == 1) {
                         String pop = pila.pop();
                         postfijo += (pop);
@@ -41,38 +51,52 @@ public class logica {
                         boolean salir = false;
                         while (!salir && !pila.isEmpty()) {
                             int operacionBucle = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
+                            System.out.println(pila.get(pila.size() - 1) + "        " + prefijo.substring(i, i + 1));
                             if (operacionBucle == 1) {
                                 String popBucle = pila.pop();
                                 postfijo += (popBucle);
                             } else {
                                 if (!(prefijo.substring(i, i + 1).equals(")"))) {
                                     pila.push(prefijo.substring(i, i + 1));
-                                    salir = true;
+                                } else {
+                                    while (!pila.isEmpty()) {
+                                        String temp = pila.pop();
+                                        if (!temp.equals("(")) {
+                                            postfijo += temp;
+                                        }
+                                    }
                                 }
+                                salir = true;
                             }
                         }
 
                         if (pila.isEmpty()) {
                             pila.push(prefijo.substring(i, i + 1));
+                            System.out.println("XDDDDD");
                         }
+
                     } else {
                         if (!(prefijo.substring(i, i + 1).equals(")"))) {
                             pila.push(prefijo.substring(i, i + 1));
+                        } else {
+                            while (!pila.isEmpty()) {
+                                String temp = pila.pop();
+                                if (!temp.equals("(")) {
+                                    postfijo += temp;
+                                }
+                            }
                         }
                     }
-
                 }
 
             } else {
                 postfijo += (String.valueOf(prefijo.substring(i, i + 1)));
             }
+
         }
 
-        for (int i = 0; i < pila.size(); i++) {
-            System.out.println(pila.get(pila.size() - i - 1));
-            System.out.println("WTF1: " + postfijo);
-            postfijo += (pila.pop());
-            System.out.println("WTF2: " + postfijo);
+        while (!pila.isEmpty()) {
+            postfijo += pila.pop();
         }
 
         return postfijo;
