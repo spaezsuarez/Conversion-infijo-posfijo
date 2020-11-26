@@ -1,68 +1,80 @@
 package view;
 
 //Elementos Graficos
-import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
 //Elementos decorativos
 import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.JOptionPane;
 import logic.logica;
 
 public class Menu extends JFrame {
 
     private final int ancho, alto;
-    private JTextField TxtFldTexto;
-    private JLabel JLblTitle;
-    private JButton BtnCalcularPosfijo;
+    private JTextField input;
+    private JLabel title;
+    private JButton btn;
 
     public Menu() {
-        ancho = 500;
-        alto = 190;
+        ancho = 400;
+        alto = 500;
+        input = new JTextField();
+        title = new JLabel("Conversión de infijo a posfijo ");
+        btn = new JButton("Convertir");
+    }
+
+    public void initElements() {
+        input.setSize(new Dimension(ancho - 10, 45));
+        input.setHorizontalAlignment(SwingConstants.CENTER);
+        input.setFont(new Font("Arial", Font.PLAIN, 15));
+        input.setLocation(5, 100);
+
+        JScrollPane scrollUno = new JScrollPane(input);
+        scrollUno.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollUno.setSize(new Dimension(ancho - 10, 35));
+        scrollUno.setLocation(5, 100);
+        add(scrollUno);
+
+        title.setSize(new Dimension(ancho - 10, 75));
+        title.setLocation(5, 10);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        add(title);
+
+        btn.setSize(new Dimension(200, 30));
+        btn.setLocation((this.getWidth() - btn.getWidth()) / 2, 420);
+        btn.setFont(new Font("Arial", Font.PLAIN, 15));
+        btn.setFocusable(false);
+        btn.setHorizontalAlignment(SwingConstants.CENTER);
+        add(btn);
     }
 
     public void initTemplate() {
         setLayout(null);
+        setTitle("Conversión");
         setSize(new Dimension(ancho, alto));
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+        initElements();
+        initListeners();
         setLocationRelativeTo(null);
         setVisible(true);
-        setTitle("Conversión infijo a posfijo");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        initComponents();
-        initListeners();
-    }
-
-    public void initComponents() {
-        JLblTitle = new JLabel("Ingrese su texto");
-        add(JLblTitle);
-        JLblTitle.setSize(475, 40);
-        JLblTitle.setLocation(5, 5);
-        JLblTitle.setVisible(true);
-        JLblTitle.setHorizontalAlignment(JLabel.CENTER);
-        JLblTitle.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-        JLblTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        TxtFldTexto = new JTextField();
-        add(TxtFldTexto);
-        TxtFldTexto.setSize(475, 40);
-        TxtFldTexto.setLocation(5, 55);
-        TxtFldTexto.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-        TxtFldTexto.setHorizontalAlignment(JTextField.CENTER);
-        TxtFldTexto.setVisible(true);
-
-        BtnCalcularPosfijo = new JButton("Ctrl Z");
-        add(BtnCalcularPosfijo);
-        BtnCalcularPosfijo.setSize(475, 40);
-        BtnCalcularPosfijo.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-        BtnCalcularPosfijo.setLocation(5, 105);
     }
 
     public void initListeners() {
-        BtnCalcularPosfijo.addActionListener((ae) -> {
-            logica logic = new logica(TxtFldTexto.getText());
+        btn.addActionListener((ae) -> {
+            logica logic = new logica();
+            String respuesta = logic.calcularSufijo(input.getText());
+            JOptionPane.showMessageDialog(null, respuesta, "Solución", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(respuesta);
         });
     }
 
