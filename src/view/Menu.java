@@ -15,12 +15,11 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import logic.logica;
 
-
 public class Menu extends JFrame {
 
     private final int ancho, alto;
     private JTextField input;
-    private JLabel title,result;
+    private JLabel title, result;
     private JButton btn;
 
     public Menu() {
@@ -50,14 +49,14 @@ public class Menu extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 20));
         title.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(title);
-        
+
         result.setSize(new Dimension(ancho - 10, 150));
         result.setLocation(5, 150);
         result.setHorizontalAlignment(SwingConstants.CENTER);
         result.setFont(new Font("Arial", Font.BOLD, 25));
         result.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(result);
-        
+
         btn.setSize(new Dimension(200, 30));
         btn.setLocation((this.getWidth() - btn.getWidth()) / 2, 320);
         btn.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -78,11 +77,11 @@ public class Menu extends JFrame {
         setVisible(true);
     }
 
-
     public void initListeners() {
         btn.addActionListener((ae) -> {
             logica logic = new logica();
             String respuesta = logic.calcularSufijo(input.getText());
+            logic.calcularGruposNumeros(input.getText());
             result.setText(respuesta);
             repaint();
         });

@@ -34,7 +34,7 @@ public class logica {
                     while (!pila.isEmpty()) {
                         String temp = pila.pop();
                         if (!temp.equals("(") && !temp.equals(")")) {
-                            postfijo += temp + " ";
+                            postfijo += temp;
                         }
                     }
                 } else if (prefijo.substring(i, i + 1).equals("(")) {
@@ -43,14 +43,13 @@ public class logica {
                     int operacion = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
                     if (operacion == 1) {
                         String pop = pila.pop();
-                        postfijo += (pop) + " ";
-
+                        postfijo += (pop);
                         boolean salir = false;
                         while (!salir && !pila.isEmpty()) {
                             int operacionBucle = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
                             if (operacionBucle == 1) {
                                 String popBucle = pila.pop();
-                                postfijo += (popBucle) + " ";
+                                postfijo += (popBucle);
                             } else {
                                 if (!(prefijo.substring(i, i + 1).equals(")"))) {
                                     pila.push(prefijo.substring(i, i + 1));
@@ -58,7 +57,7 @@ public class logica {
                                     while (!pila.isEmpty()) {
                                         String temp = pila.pop();
                                         if (!temp.equals("(") && !temp.equals(")")) {
-                                            postfijo += temp + " ";
+                                            postfijo += temp;
                                         }
                                     }
                                 }
@@ -77,14 +76,14 @@ public class logica {
                             while (!pila.isEmpty()) {
                                 String temp = pila.pop();
                                 if (!temp.equals("(") && !temp.equals(")")) {
-                                    postfijo += temp + " ";
+                                    postfijo += temp;
                                 }
                             }
                         }
                     }
                 }
             } else {
-                postfijo += (String.valueOf(prefijo.substring(i, i + 1))) + " ";
+                postfijo += (String.valueOf(prefijo.substring(i, i + 1)));
             }
 
         }
@@ -92,17 +91,48 @@ public class logica {
         while (!pila.isEmpty()) {
             String popFinal = pila.pop();
             if (!popFinal.equals(")") && !popFinal.equals("(")) {
-                postfijo += popFinal + " ";
+                postfijo += popFinal;
             }
         }
-
         return postfijo;
+
+        //17+25/2^3
     }
 
     public int operacionArreglo(String simbolo1, String simbolo2) {
         int fila = simbolos.indexOf(simbolo1);
         int columna = simbolos.indexOf(simbolo2);
         return matrizJerarquia[fila - 1][columna - 1];
+    }
+
+    public boolean isOp(String simbol) {
+        if (simbolos.contains(simbol)) {
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<String> calcularGruposNumeros(String infijo) {
+        ArrayList<String> grupos = new ArrayList<>();
+        String temp = "";
+        for (int i = 0; i < infijo.length(); i++) {
+            String caracter = String.valueOf(infijo.charAt(i));
+            if (isOp(caracter)) {
+                grupos.add(temp);
+                temp = "";
+            } else {
+                temp += caracter;
+                if (i == infijo.length() - 1) {
+                    grupos.add(temp);
+                }
+            }
+        }
+
+        for (String a : grupos) {
+            System.out.println(a);
+        }
+
+        return grupos;
     }
 
 }
