@@ -34,7 +34,7 @@ public class logica {
                     while (!pila.isEmpty()) {
                         String temp = pila.pop();
                         if (!temp.equals("(") && !temp.equals(")")) {
-                            postfijo += temp;
+                            postfijo += temp + " ";
                         }
                     }
                 } else if (prefijo.substring(i, i + 1).equals("(")) {
@@ -43,14 +43,14 @@ public class logica {
                     int operacion = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
                     if (operacion == 1) {
                         String pop = pila.pop();
-                        postfijo += (pop);
+                        postfijo += (pop) + " ";
 
                         boolean salir = false;
                         while (!salir && !pila.isEmpty()) {
                             int operacionBucle = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
                             if (operacionBucle == 1) {
                                 String popBucle = pila.pop();
-                                postfijo += (popBucle);
+                                postfijo += (popBucle) + " ";
                             } else {
                                 if (!(prefijo.substring(i, i + 1).equals(")"))) {
                                     pila.push(prefijo.substring(i, i + 1));
@@ -58,7 +58,7 @@ public class logica {
                                     while (!pila.isEmpty()) {
                                         String temp = pila.pop();
                                         if (!temp.equals("(") && !temp.equals(")")) {
-                                            postfijo += temp;
+                                            postfijo += temp + " ";
                                         }
                                     }
                                 }
@@ -77,14 +77,14 @@ public class logica {
                             while (!pila.isEmpty()) {
                                 String temp = pila.pop();
                                 if (!temp.equals("(") && !temp.equals(")")) {
-                                    postfijo += temp;
+                                    postfijo += temp + " ";
                                 }
                             }
                         }
                     }
                 }
             } else {
-                postfijo += (String.valueOf(prefijo.substring(i, i + 1)));
+                postfijo += (String.valueOf(prefijo.substring(i, i + 1))) + " ";
             }
 
         }
@@ -92,7 +92,7 @@ public class logica {
         while (!pila.isEmpty()) {
             String popFinal = pila.pop();
             if (!popFinal.equals(")") && !popFinal.equals("(")) {
-                postfijo += popFinal;
+                postfijo += popFinal + " ";
             }
         }
 
