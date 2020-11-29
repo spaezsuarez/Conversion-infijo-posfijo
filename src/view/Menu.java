@@ -12,7 +12,7 @@ import javax.swing.BorderFactory;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;
-import logic.Conversion;
+import logic.logica;
 
 public class Menu extends JFrame {
 
@@ -78,7 +78,7 @@ public class Menu extends JFrame {
 
     public void initListeners() {
         btn.addActionListener((ae) -> {
-            Conversion logic = new Conversion();
+            logica logic = new logica();
             String respuesta = logic.calcularSufijo(input.getText());
             logic.calcularGruposNumeros(input.getText());
             result.setText(respuesta);

@@ -3,14 +3,14 @@ package logic;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Conversion {
+public class logica {
 
     private final ArrayList<String> simbolos, grupos;
     private final int[][] matrizJerarquia = {{1, 1, 0, 0, 0, 0, 1}, {1, 1, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 0, 0, 1}, {1, 1, 1, 1, 0, 0, 1}, {1, 1, 1, 1, 1, 0, 1}, {0, 0, 0, 0, 0, 0, 0}};
     private final Stack<String> pila = new Stack();
     private String postfijo = "";
 
-    public Conversion() {
+    public logica() {
 
         simbolos = new ArrayList<>();
         grupos = new ArrayList<>();
