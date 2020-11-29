@@ -3,15 +3,17 @@ package logic;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class logica {
+public class Conversion {
 
-    private final ArrayList<String> simbolos;
+    private final ArrayList<String> simbolos, grupos;
     private final int[][] matrizJerarquia = {{1, 1, 0, 0, 0, 0, 1}, {1, 1, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 0, 0, 1}, {1, 1, 1, 1, 0, 0, 1}, {1, 1, 1, 1, 1, 0, 1}, {0, 0, 0, 0, 0, 0, 0}};
-    private Stack<String> pila = new Stack();
+    private final Stack<String> pila = new Stack();
+    private String postfijo = "";
 
-    public logica() {
+    public Conversion() {
 
         simbolos = new ArrayList<>();
+        grupos = new ArrayList<>();
 
         simbolos.add("0");
         simbolos.add("+");
@@ -25,7 +27,7 @@ public class logica {
     }
 
     public String calcularSufijo(String prefijo) {
-        String postfijo = "";
+
         for (int i = 0; i < prefijo.length(); i++) {
             if (simbolos.contains(prefijo.substring(i, i + 1))) {
                 if (pila.isEmpty()) {
@@ -112,8 +114,7 @@ public class logica {
         return false;
     }
 
-    public ArrayList<String> calcularGruposNumeros(String infijo) {
-        ArrayList<String> grupos = new ArrayList<>();
+    public void calcularGruposNumeros(String infijo) {
         String temp = "";
         for (int i = 0; i < infijo.length(); i++) {
             String caracter = String.valueOf(infijo.charAt(i));
@@ -132,7 +133,47 @@ public class logica {
             System.out.println(a);
         }
 
-        return grupos;
+    }
+
+    public boolean isContent(String principal, String secundario) {
+        for (int i = 0; i < principal.length(); i++) {
+            System.out.println("Principal: " + principal + " Secundario: " + secundario);
+            if (principal.substring(i, i + 1).equals(secundario)) {
+                //System.out.println("Secundario: " + secundario + " Principal (cortado): " + principal.substring(i, i + 1));
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public void refactorExpression() {
+        String temp = "";
+        int index = 0;
+        System.out.println("POS: " + postfijo);
+
+        for (int i = 0; i < postfijo.length(); i++) {
+            try {
+                System.out.println("Elemento cadena: " + postfijo.substring(i, i + 1));
+                if (isContent(grupos.get(index), postfijo.substring(i, i + 1))) {
+                    temp += postfijo.substring(i, i + 1);
+
+                } else if (isContent(temp, grupos.get(index))) {
+                    System.out.println("Si eso es cierto");
+                    temp += " ";
+                    index++;
+                } else {
+                    temp += " " + postfijo.substring(i, i + 1);
+                    index++;
+                }
+
+            } catch (IndexOutOfBoundsException e) {
+                temp += " " + postfijo.substring(postfijo.length() - 1);
+            }
+
+        }
+
+        System.out.println("temp: " + temp);
     }
 
 }

@@ -12,8 +12,7 @@ import javax.swing.BorderFactory;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JOptionPane;
-import logic.logica;
+import logic.Conversion;
 
 public class Menu extends JFrame {
 
@@ -79,10 +78,11 @@ public class Menu extends JFrame {
 
     public void initListeners() {
         btn.addActionListener((ae) -> {
-            logica logic = new logica();
+            Conversion logic = new Conversion();
             String respuesta = logic.calcularSufijo(input.getText());
             logic.calcularGruposNumeros(input.getText());
             result.setText(respuesta);
+            logic.refactorExpression();
             repaint();
         });
     }
