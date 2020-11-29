@@ -158,7 +158,7 @@ public class Conversion {
                 if (isContent(grupos.get(index), postfijo.substring(i, i + 1))) {
                     temp += postfijo.substring(i, i + 1);
 
-                } else if (isContent(temp, grupos.get(index))) {
+                } else if (isContent(grupos.get(index), temp)) {
                     System.out.println("Si eso es cierto");
                     temp += " ";
                     index++;
