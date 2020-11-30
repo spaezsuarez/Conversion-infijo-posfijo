@@ -80,9 +80,8 @@ public class Menu extends JFrame {
     public void initListeners() {
         btn.addActionListener((ae) -> {
             logica logic = new logica();
-            String respuesta = logic.calcularSufijo(input.getText());
-            logic.calcularGruposNumeros(input.getText());
-            result.setText(respuesta);
+            String[] resps = logic.calcularSufijo(input.getText());
+            result.setText("<html><body><p><center>" + resps[0] + "</center></p><br><center>" + resps[1] + "</center></body></html>");
             repaint();
         });
     }
