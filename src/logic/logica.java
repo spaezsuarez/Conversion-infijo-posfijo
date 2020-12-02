@@ -8,6 +8,7 @@ public class logica {
     private final ArrayList<String> simbolos;
     private final int[][] matrizJerarquia = {{1, 1, 0, 0, 0, 0, 1}, {1, 1, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 0, 0, 1}, {1, 1, 1, 1, 0, 0, 1}, {1, 1, 1, 1, 1, 0, 1}, {0, 0, 0, 0, 0, 0, 0}};
     private Stack<String> pila = new Stack();
+    private boolean numnegativo = false;
 
     public logica() {
 
@@ -43,6 +44,9 @@ public class logica {
                     }
                 } else if (prefijo.substring(i, i + 1).equals("(")) {
                     pila.push(prefijo.substring(i, i + 1));
+                } else if (prefijo.substring(i, i + 1).equals("-") && isOp(prefijo.substring(i - 1, i))) {
+                    postfijo += "-";
+                    numnegativo=true;
                 } else {
                     int operacion = operacionArreglo(pila.get(pila.size() - 1), prefijo.substring(i, i + 1));
                     if (operacion == 1) {
@@ -77,7 +81,9 @@ public class logica {
                     } else {
                         if (!(prefijo.substring(i, i + 1).equals(")"))) {
                             pila.push(prefijo.substring(i, i + 1));
-                            postfijo += " ";
+                            if (!postfijo.substring(postfijo.length() - 1, postfijo.length()).equals(" ")) {
+                                postfijo += " ";
+                            }
                         } else {
                             postfijo += " ";
                             while (!pila.isEmpty()) {
@@ -94,7 +100,11 @@ public class logica {
                     postfijo += (String.valueOf(prefijo.substring(i, i + 1)));
                 } else {
                     if (isOp((postfijo.substring(postfijo.length() - 1, postfijo.length())))) {
-                        postfijo += " " + (String.valueOf(prefijo.substring(i, i + 1)));
+                        if (!postfijo.substring(postfijo.length() - 1, postfijo.length()).equals(" ") && !numnegativo) {
+                            postfijo += " ";
+                        }
+                        postfijo += (String.valueOf(prefijo.substring(i, i + 1)));
+                        numnegativo=false;
                     } else {
                         postfijo += (String.valueOf(prefijo.substring(i, i + 1)));
                     }
@@ -123,8 +133,6 @@ public class logica {
     public int operacionArreglo(String simbolo1, String simbolo2) {
         int fila = simbolos.indexOf(simbolo1);
         int columna = simbolos.indexOf(simbolo2);
-        System.out.println("wtf1: " + simbolo1);
-        System.out.println("wtf2: " + simbolo2);
         return matrizJerarquia[fila - 1][columna - 1];
         //1+(0/8)-(4*(4/5))*((1+2)/5)
     }
@@ -144,7 +152,11 @@ public class logica {
                 pilaOperacion.push(String.valueOf(valorNuevo));
             }
         }
-        return pilaOperacion.pop();
+        String asd = pilaOperacion.pop();
+        if(asd.equals("Infinity")){
+            return "División entre 0";
+        }
+        return asd;
     }
 
     public boolean isOp(String simbol) {
