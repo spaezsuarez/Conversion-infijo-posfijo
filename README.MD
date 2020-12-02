@@ -6,3 +6,6 @@ Programa para hacer conversiones entre notaciones haciendo uso de pilas (estruct
 
 - Miguel Angel Rico Garcia
 - Sergio David Paez Suarez
+
+## Interfaz 
+![Menu](doc/Menu.png)
