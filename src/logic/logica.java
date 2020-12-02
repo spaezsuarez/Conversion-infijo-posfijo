@@ -13,7 +13,7 @@ public class logica {
 
         simbolos = new ArrayList<>();
 
-        simbolos.add("0");
+        simbolos.add("br");
         simbolos.add("+");
         simbolos.add("-");
         simbolos.add("*");
@@ -28,10 +28,13 @@ public class logica {
         String postfijo = "";
         for (int i = 0; i < prefijo.length(); i++) {
             if (simbolos.contains(prefijo.substring(i, i + 1))) {
-                if (pila.isEmpty()) {
+                if (pila.isEmpty() && !prefijo.substring(i, i + 1).equals(")")) {
                     pila.push(prefijo.substring(i, i + 1));
-                    postfijo += " ";
+                    if (!postfijo.substring(postfijo.length() - 1, postfijo.length()).equals(" ")) {
+                        postfijo += " ";
+                    }
                 } else if (prefijo.substring(i, i + 1).equals(")")) {
+                    postfijo += " ";
                     while (!pila.isEmpty()) {
                         String temp = pila.pop();
                         if (!temp.equals("(") && !temp.equals(")")) {
@@ -76,6 +79,7 @@ public class logica {
                             pila.push(prefijo.substring(i, i + 1));
                             postfijo += " ";
                         } else {
+                            postfijo += " ";
                             while (!pila.isEmpty()) {
                                 String temp = pila.pop();
                                 if (!temp.equals("(") && !temp.equals(")")) {
@@ -99,6 +103,7 @@ public class logica {
         }
 
         while (!pila.isEmpty()) {
+
             postfijo += " ";
             String popFinal = pila.pop();
             if (!popFinal.equals(")") && !popFinal.equals("(")) {
@@ -118,7 +123,10 @@ public class logica {
     public int operacionArreglo(String simbolo1, String simbolo2) {
         int fila = simbolos.indexOf(simbolo1);
         int columna = simbolos.indexOf(simbolo2);
+        System.out.println("wtf1: " + simbolo1);
+        System.out.println("wtf2: " + simbolo2);
         return matrizJerarquia[fila - 1][columna - 1];
+        //1+(0/8)-(4*(4/5))*((1+2)/5)
     }
 
     public String calcularOperacion(String postfijoEspacios) {
